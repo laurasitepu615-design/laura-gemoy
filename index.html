@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Cuaca Kemayoran</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f7f8fa;
+    color: #333;
+    padding: 20px;
+  }
+  h2 {
+    color: #0056b3;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 25px;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+  th {
+    background-color: #007bff;
+    color: white;
+  }
+  img {
+    width: 40px;
+    height: 40px;
+  }
+  @media (max-width: 600px) {
+    table, thead, tbody, th, td, tr {
+      display: block;
+    }
+    th {
+      display: none;
+    }
+    td {
+      border: none;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+      padding-left: 50%;
+      position: relative;
+    }
+    td:before {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      white-space: nowrap;
+      font-weight: bold;
+    }
+  }
+</style>
+</head>
+<body>
+
+<h2>📍 Informasi Lokasi</h2>
+<table>
+  <tr><th>Provinsi</th><td>DKI Jakarta</td></tr>
+  <tr><th>Kota/Kabupaten</th><td>Kota Adm. Jakarta Pusat</td></tr>
+  <tr><th>Kecamatan</th><td>Kemayoran</td></tr>
+  <tr><th>Desa</th><td>Kemayoran</td></tr>
+  <tr><th>Longitude</th><td>106.8453837867</td></tr>
+  <tr><th>Latitude</th><td>-6.1647214778</td></tr>
+  <tr><th>Zona Waktu</th><td>Asia/Jakarta</td></tr>
+</table>
+
+<h2>🌦 Prakiraan Cuaca Kemayoran</h2>
+<table id="cuacaTable">
+  <thead>
+    <tr>
+      <th>Waktu Lokal</th>
+      <th>Suhu (°C)</th>
+      <th>Kelembapan (%)</th>
+      <th>Cuaca</th>
+      <th>Curah Hujan (mm)</th>
+      <th>Kecepatan Angin (m/s)</th>
+      <th>Arah Angin</th>
+      <th>Ikon</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+// JSON singkat diambil dari data kamu
+const data = {
+  "data": [
+    {
+      "cuaca": [
+        [
+          {
+            "local_datetime": "2025-11-06 09:00:00",
+            "t": 30,
+            "hu": 66,
+            "tp": 0,
+            "weather_desc": "Berawan",
+            "ws": 11.4,
+            "wd": "SW",
+            "image": "https://api-apps.bmkg.go.id/storage/icon/cuaca/berawan-am.svg"
+          },
+          {
+            "local_datetime": "2025-11-06 12:00:00",
+            "t": 31,
+            "hu": 64,
+            "tp": 0.4,
+            "weather_desc": "Berawan",
+            "ws": 10.8,
+            "wd": "SW",
+            "image": "https://api-apps.bmkg.go.id/storage/icon/cuaca/berawan-am.svg"
+          },
+          {
+            "local_datetime": "2025-11-06 15:00:00",
+            "t": 27,
+            "hu": 83,
+            "tp": 1.7,
+            "weather_desc": "Hujan Ringan",
+            "ws": 9.9,
+            "wd": "S",
+            "image": "https://api-apps.bmkg.go.id/storage/icon/cuaca/hujan ringan-am.svg"
+          }
+        ]
+      ]
+    }
+  ]
+};
+
+// Ambil tabel body
+const tbody = document.querySelector("#cuacaTable tbody");
+data.data[0].cuaca.flat().forEach(item => {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td>${item.local_datetime}</td>
+    <td>${item.t}</td>
+    <td>${item.hu}</td>
+    <td>${item.weather_desc}</td>
+    <td>${item.tp}</td>
+    <td>${item.ws}</td>
+    <td>${item.wd}</td>
+    <td><img src="${item.image}" alt="ikon cuaca"></td>
+  `;
+  tbody.appendChild(tr);
+});
+</script>
+
+</body>
+</html>
